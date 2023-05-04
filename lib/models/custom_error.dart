@@ -1,5 +1,5 @@
 class CustomError {
-  CustomError({required this.errMsg});
+  CustomError({this.errMsg = ''});
   final String errMsg;
 
   @override

@@ -9,19 +9,22 @@ import 'package:weather_app/models/weather.dart';
 import 'package:weather_app/services/http_error_handler.dart';
 
 class WeatherApiServices {
-  WeatherApiServices({required this.httpClient});
   final http.Client httpClient;
+  WeatherApiServices({
+    required this.httpClient,
+  });
 
   Future<DirectGeocoding> getDirectGeocoding(String city) async {
     final Uri uri = Uri(
-        scheme: 'https',
-        host: kApiHost,
-        path: '/geo/1.0/direct',
-        queryParameters: {
-          'q': city,
-          'limit': kLimit,
-          'appid': dotenv.env['APPID'],
-        });
+      scheme: 'https',
+      host: kApiHost,
+      path: '/geo/1.0/direct',
+      queryParameters: {
+        'q': city,
+        'limit': kLimit,
+        'appid': dotenv.env['APPID'],
+      },
+    );
 
     try {
       final http.Response response = await httpClient.get(uri);
@@ -46,15 +49,16 @@ class WeatherApiServices {
 
   Future<Weather> getWeather(DirectGeocoding directGeocoding) async {
     final Uri uri = Uri(
-        scheme: 'https',
-        host: kApiHost,
-        path: '/data/2.5/weather',
-        queryParameters: {
-          'lat': '${directGeocoding.lat}',
-          'lon': '${directGeocoding.lon}',
-          'units': kUnit,
-          'appid': dotenv.env['APPID'],
-        });
+      scheme: 'https',
+      host: kApiHost,
+      path: '/data/2.5/weather',
+      queryParameters: {
+        'lat': '${directGeocoding.lat}',
+        'lon': '${directGeocoding.lon}',
+        'units': kUnit,
+        'appid': dotenv.env['APPID'],
+      },
+    );
 
     try {
       final http.Response response = await httpClient.get(uri);
